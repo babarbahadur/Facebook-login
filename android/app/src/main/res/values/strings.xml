@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">myZewanaApp2</string>
+    <string name="facebook_app_id">2273857382943767</string>
+    <string name="fb_login_protocol_scheme">fb2273857382943767</string>
+</resources>
