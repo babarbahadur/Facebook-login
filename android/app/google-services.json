@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "658242629884",
+    "firebase_url": "https://zawena2.firebaseio.com",
+    "project_id": "zawena2",
+    "storage_bucket": "zawena2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:658242629884:android:d9c22bfb1b1d80df",
+        "android_client_info": {
+          "package_name": "com.myzewanaapp2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "658242629884-ah0v2u5osllppmd174j0nbe37ergknmp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBG-FmICkO-bSCOsY1wJXekaGCLf_UkoLA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "658242629884-ah0v2u5osllppmd174j0nbe37ergknmp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -21,7 +21,10 @@ const firebaseRef = firebase.initializeApp(config)
 
 export default class App extends React.Component {
 
- 
+componentDidMount = () => {
+  GoogleSignin.configure({});
+} 
+
   _fbAuth() {
     LoginManager.logInWithPermissions(['public_profile']).then(
       function(result){
@@ -49,7 +52,7 @@ export default class App extends React.Component {
     );  
   }
 
-  onLoginGoogle = () =>{
+  onLoginGoogle() {
     GoogleSignin
     .signIn()
     .then((data) => {
@@ -57,10 +60,10 @@ export default class App extends React.Component {
       const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
       //login with credential
       return firebase.auth().signInWithCredential(credential);
+      
     })
     .then((currentUser) => {
       console.log(`Google login with user: ${JSON.stringify(currentUser.toJSON())}` );
-
     })
     .catch((error) => {
       console.log(`Login fail with error: ${error}` );
@@ -73,11 +76,13 @@ export default class App extends React.Component {
       <View style={{ marginTop: 20, flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
         <View style={{ flexDirection: 'column' }} >
           <TouchableOpacity>
-          <SocialIcon type="facebook" onPress= {this._fbAuth}/>
+              <SocialIcon type="facebook" onPress= {this._fbAuth}/>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'column' }}>
-          <SocialIcon type="google-plus-official"  />
+          <TouchableOpacity>
+              <SocialIcon type="google-plus-official"  onPress = {this.onLoginGoogle}/>
+          </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'column' }}>
           <SocialIcon type="linkedin" onPress={() => { alert('linkedin'); }} />

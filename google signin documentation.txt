@@ -1,0 +1,44 @@
+Install react-native-google-signin
+https://github.com/react-native-community/react-native-google-signin
+
+Then Follow Android Guide
+https://github.com/react-native-community/react-native-google-signin/blob/master/docs/android-guide.mda
+DO NOT DO ANY CHANGES IN MAIN APPLICATION.JAVA
+
+-Then go to Firebase
+Select your project and click into Add App..
+It will ask you to enter your package name after you enter it. It allows you to download the google-services.json file.
+which you have to copy in your android/app folder.
+
+Tutorials: 
+https://www.youtube.com/watch?v=dFnnXlJq7tg
+
+****CODE****
+
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+
+
+
+componentDidMount = () => {
+  GoogleSignin.configure({});
+} 
+
+
+onLoginGoogle() {
+    GoogleSignin
+    .signIn()
+    .then((data) => {
+      //create a new firebase credential with the token
+      const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
+      //login with credential
+      return firebase.auth().signInWithCredential(credential);
+      
+    })
+    .then((currentUser) => {
+      console.log(`Google login with user: ${JSON.stringify(currentUser.toJSON())}` );
+    })
+    .catch((error) => {
+      console.log(`Login fail with error: ${error}` );
+    });
+  }
+
