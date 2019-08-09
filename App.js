@@ -1,8 +1,9 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Content } from "native-base";
+import { Content, Button } from "native-base";
 import { SocialIcon } from 'react-native-elements';
 import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk'
+import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import firebase from 'firebase'
 
 
@@ -47,24 +48,43 @@ export default class App extends React.Component {
     }
     );  
   }
+
+  onLoginGoogle = () =>{
+    GoogleSignin
+    .signIn()
+    .then((data) => {
+      //create a new firebase credential with the token
+      const credential = firebase.auth.GoogleAuthProvider.credential(data.idToken, data.accessToken);
+      //login with credential
+      return firebase.auth().signInWithCredential(credential);
+    })
+    .then((currentUser) => {
+      console.log(`Google login with user: ${JSON.stringify(currentUser.toJSON())}` );
+
+    })
+    .catch((error) => {
+      console.log(`Login fail with error: ${error}` );
+    });
+  }
  
   render() {
     return (
       <Content>
       <View style={{ marginTop: 20, flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
         <View style={{ flexDirection: 'column' }} >
-          <TouchableOpacity onPress = {this._fbAuth()}>
-          <SocialIcon type="facebook"/>
+          <TouchableOpacity>
+          <SocialIcon type="facebook" onPress= {this._fbAuth}/>
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'column' }}>
-          <SocialIcon type="google-plus-official" onPress={() => { alert('google'); }} />
+          <SocialIcon type="google-plus-official"  />
         </View>
         <View style={{ flexDirection: 'column' }}>
           <SocialIcon type="linkedin" onPress={() => { alert('linkedin'); }} />
         </View>
       </View>
       </Content>
+      
     );
   }
 }
