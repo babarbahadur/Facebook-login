@@ -5,7 +5,9 @@ import { SocialIcon } from 'react-native-elements';
 import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk'
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import firebase from 'firebase'
+import LinkedInModal from 'react-native-linkedin'
 
+console.disableYellowBox = true;
 
 var config = {
     apiKey: "AIzaSyCMqje7iJz1wruDd14MqxxQdWfL1aFa3A0",
@@ -67,7 +69,19 @@ componentDidMount = () => {
     })
     .catch((error) => {
       console.log(`Login fail with error: ${error}` );
+      alert('Login cancelled');
     });
+  }
+  onLinkedInLogin = () => {
+      <View>
+        <LinkedInModal
+          onPress = "true"
+          clientID="86li8a5icdlteg"
+          clientSecret="41v6apmBGDnW7tI6"
+          redirectUri="https://www.google.com"
+          onSuccess={token => console.log(token)}
+        />
+        </View>
   }
  
   render() {
@@ -85,7 +99,15 @@ componentDidMount = () => {
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'column' }}>
-          <SocialIcon type="linkedin" onPress={() => { alert('linkedin'); }} />
+          <SocialIcon type="linkedin" onPress = {this.onLinkedInLogin} />
+        </View>
+        <View>
+        <LinkedInModal
+          clientID="86li8a5icdlteg"
+          clientSecret="41v6apmBGDnW7tI6"
+          redirectUri="https://www.google.com"
+          onSuccess={token => console.log(token)}
+        />
         </View>
       </View>
       </Content>

@@ -1,0 +1,25 @@
+Install React Native Linkedin
+https://www.npmjs.com/package/react-native-linkedin
+
+Since WebView has been removed from React native therefore we have to install it from 
+https://github.com/react-native-community/react-native-webview
+
+After installing it go to the node modules/react-native-linkedin/index and import
+import { WebView } from 'react-native-webview';
+
+Now your package will be working fine now go to your app.js file
+
+Then Go to https://www.linkedin.com/developers/apps
+Create a new app and fill in the required data then you will get clientID and clientSecret  which you have to copy in the
+LinkedinModal as mentioned below..
+
+import LinkedInModal from 'react-native-linkedin'
+
+	<View>
+        <LinkedInModal
+          clientID="86li8a5icdlteg"
+          clientSecret="41v6apmBGDnW7tI6"
+          redirectUri="https://www.google.com"
+          onSuccess={token => console.log(token)}
+        />
+        </View> 
