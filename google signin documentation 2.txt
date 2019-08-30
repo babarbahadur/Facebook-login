@@ -1,0 +1,112 @@
+https://www.youtube.com/watch?v=A-hOjTnD2dM
+
+https://github.com/react-native-community/react-native-google-signin/blob/master/example/index.js
+
+https://github.com/sunlight3d/react_native_v0.49/issues/6
+
+**Using hash from this was showing DEVELOPER_ERROR
+keytool -list -v -keystore "C:\Users\babar\.android\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+
+**This one is working fine
+keytool -list -v -keystore "E:\Jazsoft\Zewana\ZewanaApp\android\app\debug.keystore" -alias androiddebugkey -storepass android -keypass android
+
+
+
+Entry type: PrivateKeyEntry
+Certificate chain length: 1
+Certificate[1]:
+Owner: C=US, O=Android, CN=Android Debug
+Issuer: C=US, O=Android, CN=Android Debug
+Serial number: 1
+Valid from: Mon Jun 24 15:20:54 PKT 2019 until: Wed Jun 16 15:20:54 PKT 2049
+Certificate fingerprints:
+         MD5:  EE:00:8C:62:F5:1F:7A:BD:F7:91:B0:F7:21:34:D1:E4
+         SHA1: F6:3C:58:F2:B1:F4:8E:D3:AD:E9:38:4E:60:E8:18:44:89:E8:DA:13
+         SHA256: 97:20:C3:98:77:44:97:49:E6:72:6D:9D:3F:0F:9C:C2:11:B0:E1:9D:3E:72:A7:F9:AD:A3:2C:01:F4:EC:80:32
+Signature algorithm name: SHA1withRSA
+Subject Public Key Algorithm: 1024-bit RSA key
+Version: 1
+
+Warning:
+The JKS keystore uses a proprietary format. It is recommended to migrate to PKCS12 which is an industry standard format using "keytool -importkeystore -srckeystore C:\Users\babar\.android\debug.keystore -destkeystore C:\Users\babar\.android\debug.keystore -deststoretype pkcs12".
+
+*** Code ***
+async componentDidMount() {
+    this._configureGoogleSignIn();
+    await this._getCurrentUser();
+  }
+
+  _configureGoogleSignIn() {
+    GoogleSignin.configure({
+      webClientId: '724867728193-mbvkj8jlg1tj2ltc7gin7mda6bqtdhf0.apps.googleusercontent.com',
+      offlineAccess: false,
+    });
+  }
+
+  componentDidMount() {
+    GoogleSignin.configure({});
+  }
+
+-------------------------------------------------
+
+ _googleAuth = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn()
+      
+      console.log(userInfo)
+      //This will set the state from the JSON file
+      this.setState({
+        google_first_name: userInfo.user.givenName,
+        google_last_name: userInfo.user.familyName,
+        google_email: userInfo.user.email,
+        google_profile_picture: userInfo.user.photo,
+      });
+      console.log(this.state.google_first_name + this.state.google_last_name + this.state.google_email + this.state.google_profile_picture)
+
+      Alert.alert(
+        'Alert',
+        'Login Sucessful',
+        [
+          {text: 'Logout', onPress: () => {
+            this.googleLogout();
+          //  GoogleSignin.signOut()
+          //  console.log("Google Logout")
+        }
+          },
+          {
+            text: 'Cancel',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          }
+        ],
+        {cancelable: false},
+      );
+
+     // alert('Sucessful' + userInfo)
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // sign in was cancelled
+        Alert.alert('cancelled');
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation in progress already
+        Alert.alert('in progress');
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        Alert.alert('play services not available or outdated');
+      } else {
+        Alert.alert('Something went wrong', error.toString());
+      }
+    }
+  };
+
+  googleLogout = () => {
+    GoogleSignin.signOut();
+
+    this.setState({
+      google_first_name: '',
+      google_last_name: '',
+      google_email: '',
+      google_profile_picture: '',
+    });
+    console.log('Google logged out and states reset')
+  }

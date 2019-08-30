@@ -1,0 +1,61 @@
+Social Login Through Twitter:
+
+Video:
+https://www.youtube.com/watch?v=0xYJ8DnZY5w
+
+--> go to projectName\node_modules\react-native-twitter-signin\package.json and delete the dependencies of react-native and react.
+--> delete projectName\node_modules\react-native-twitter-signin\node_modules\react
+
+
+*** Code ***
+
+ _twitterAuth = () => {
+    RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET)
+    RNTwitterSignIn.logIn()
+      .then(loginData => {
+        console.log(loginData)
+ //       Alert.alert(loginData.userName + loginData.email + loginData.name)
+        
+        //If the login is sucessful then it will set the state accordingly from the JSON data
+          this.setState({
+            twitter_user_name: loginData.userName,
+            twitter_email: loginData.email,
+            twitter_name: loginData.name 
+            });
+            console.log(this.state.twitter_user_name + this.state.twitter_email + this.state.twitter_name)
+
+        Alert.alert(
+          'Alert',
+          'Login Sucessful',
+          [
+            {text: 'Logout', onPress: () => this.twitterLogout()},
+            {
+              text: 'Cancel',
+              onPress: () => console.log('Cancel Pressed'),
+              style: 'cancel',
+            }
+          ],
+          {cancelable: false},
+        );
+
+        const { authToken, authTokenSecret} = loginData
+        if (authToken && authTokenSecret) {
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      }
+    )
+  }
+
+  twitterLogout = () => {
+    RNTwitterSignIn.logOut()
+
+    //Now if the user decides to logout the states will be cleared 
+    this.setState({
+      twitter_user_name: '',
+      twitter_email: '',
+      twitter_name: '' 
+      });
+      console.log('Twitter Logout and states reset')
+  }

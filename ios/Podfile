@@ -32,6 +32,8 @@ target 'myZewanaApp2' do
 
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
 
+  pod 'react-native-twitter-signin', :path => '../node_modules/react-native-twitter-signin'
+
   target 'myZewanaApp2Tests' do
     inherit! :search_paths
     # Pods for testing

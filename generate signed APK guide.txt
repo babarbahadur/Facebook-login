@@ -1,0 +1,38 @@
+Follow react native document for generating the signed APK
+https://facebook.github.io/react-native/docs/0.59/signed-apk-android
+
+if some error occurs do this work 
+
+go to android/app/build.gradle
+
+android {
+    ...
+    defaultConfig { ... }
+signingConfigs {
+        release {
+       //     if (project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
+                storeFile file("my-upload-key.keystore")
+                storePassword "123456"
+                keyAlias "my-key-alias"
+                keyPassword "123456"
+      //      }
+        }
+    }
+
+buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+}
+
+(We have just commented the if and have hardcoded the details below. Make sure that my-upload-key.keystore file is 
+located in android/app folder.)
+
+Videos:
+https://www.youtube.com/watch?v=-9KCONeG9NI
+https://www.youtube.com/watch?v=cws_eQ5LQUk
+
+stackoverflow:
+https://stackoverflow.com/questions/44365242/react-native-generating-signed-apk-keystore-file-not-set-for-signing-config-rel

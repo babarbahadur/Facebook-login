@@ -2,7 +2,7 @@ Install react-native-google-signin
 https://github.com/react-native-community/react-native-google-signin
 
 Then Follow Android Guide
-https://github.com/react-native-community/react-native-google-signin/blob/master/docs/android-guide.mda
+https://github.com/react-native-community/react-native-google-signin/blob/master/docs/android-guide.md
 DO NOT DO ANY CHANGES IN MAIN APPLICATION.JAVA
 
 -Then go to Firebase

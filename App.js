@@ -1,11 +1,19 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity, NativeModules } from "react-native";
 import { Content, Button } from "native-base";
 import { SocialIcon } from 'react-native-elements';
 import FBSDK, {LoginManager, AccessToken} from 'react-native-fbsdk'
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import firebase from 'firebase'
 import LinkedInModal from 'react-native-linkedin'
+
+const { RNTwitterSignIn } = NativeModules
+
+const Constants = {
+  //Dev Parse keys
+  TWITTER_COMSUMER_KEY: "gaobOoOwXbCbPTpCgKBKgpc42",
+  TWITTER_CONSUMER_SECRET: "zUOasieeirFwjtrcUiv2QpsUgMoHpcKz1wUHmp8mnVYlRPtCPf"
+}
 
 console.disableYellowBox = true;
 
@@ -33,7 +41,7 @@ componentDidMount = () => {
       if(result.isCancelled) {
         alert('Login cancelled');
       } else {
-        //console.log('Login was a successful' + result.grantedPermissions.toString());
+        console.log('Login was a successful' + result.grantedPermissions.toString());
 
         AccessToken.getCurrentAccessToken().then((accessTokenData) => {
           const credential = firebase.auth.FacebookAuthProvider.credential(accessTokenData.accessToken)
@@ -83,6 +91,26 @@ componentDidMount = () => {
         />
         </View>
   }
+
+  _twitterSignIn = () => {
+    RNTwitterSignIn.init(Constants.TWITTER_COMSUMER_KEY, Constants.TWITTER_CONSUMER_SECRET)
+    RNTwitterSignIn.logIn()
+      .then(loginData => {
+        console.log(loginData)
+        const { authToken, authTokenSecret} = loginData
+        if (authToken && authTokenSecret) {
+        }
+      })
+      .then((data) => {
+        const credential = firebase.auth.TwitterAuthProvider.credential(data.secret, data.accessToken);
+      //login with credential
+      return firebase.auth().signInWithCredential(credential);
+      })
+      .catch(error => {
+        console.log(error)
+      }
+    )
+  }
  
   render() {
     return (
@@ -99,7 +127,7 @@ componentDidMount = () => {
           </TouchableOpacity>
         </View>
         <View style={{ flexDirection: 'column' }}>
-          <SocialIcon type="linkedin" onPress = {this.onLinkedInLogin} />
+          <SocialIcon type="twitter" onPress = {this._twitterSignIn} />
         </View>
         <View>
         <LinkedInModal
